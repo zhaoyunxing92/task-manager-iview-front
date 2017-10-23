@@ -39,6 +39,8 @@
   }
 </style>
 <script>
+  import Api from '@Api'
+  import HttpUtils from '../../utils/HttpUtils'
   export default {
     data () {
       return {
@@ -49,10 +51,12 @@
         },
         LoginFormRule: {
           account: [
-            {required: true, message: '请填写用户名', trigger: 'blur'}
+            {required: true, message: '请填写用户名', trigger: 'blur'},
+            {required: true, message: '请填写用户名', trigger: 'change'},
           ],
           password: [
             {required: true, message: '请填写密码', trigger: 'blur'},
+            {required: true, message: '请填写密码', trigger: 'change'},
 //            {type: 'string', min: 6, message: '密码长度不能小于6位', trigger: 'blur'}
           ]
         }
@@ -60,10 +64,21 @@
     },
     methods: {
       login(name) {
-        this.$refs[name].validate((valid) => {
+        let that = this;
+        that.$refs[name].validate((valid) => {
           if (valid) {
-            this.loading = true;
-            this.$Message.success('提交成功!');
+            that.loading = true;
+            HttpUtils.baseRequest(Api.auth.login.url, Api.auth.login.method, that.LoginForm, function (data) {
+              that.$router.push('projects');
+            }, function (error) {
+              //that.$refs[name].resetFields();
+              that.loading = false;
+              that.$Message.error(error);
+            })
+
+            //this.$Message.success('提交成功!');
+          } else {
+            that.loading = false;
           }
         })
       }

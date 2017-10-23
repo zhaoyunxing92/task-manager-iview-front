@@ -4,33 +4,58 @@
       <i-col :span="spanLeft" class="layout-menu-left">
         <!--logo-->
         <div class="layout-logo-left">{{orgName}}</div>
-        <Menu active-name="1" width="auto" @on-select="goToPath">
 
-          <Menu-item name="1">
-            <Icon type="ios-navigate" :size="iconSize"></Icon>
-            <span class="layout-text">选项 1</span>
-          </Menu-item>
+        <Menu :active-name="setActive" width="auto" @on-select="goToPath">
+          <MenuGroup title="团队">
+            <Menu-item name="/orgs">
+              <Icon type="ios-navigate" :size="iconSize"></Icon>
+              <span class="layout-text">团队列表</span>
+            </Menu-item>
+            <Menu-item name="/orgs/projects">
+              <Icon type="ios-navigate" :size="iconSize"></Icon>
+              <span class="layout-text">团队项目</span>
+            </Menu-item>
+            <Menu-item name="/orgs/tasks">
+              <Icon type="ios-navigate" :size="iconSize"></Icon>
+              <span class="layout-text">团队任务</span>
+            </Menu-item>
+          </MenuGroup>
 
-          <Menu-item name="2">
-            <Icon type="ios-keypad" :size="iconSize"></Icon>
-            <span class="layout-text">选项 2</span>
-          </Menu-item>
-          <Menu-item name="3">
-            <Icon type="ios-analytics" :size="iconSize"></Icon>
-            <span class="layout-text">选项 3</span>
-          </Menu-item>
-          <Menu-item name="4">
-            <Icon type="ios-analytics" :size="iconSize"></Icon>
-            <span class="layout-text">选项 3</span>
-          </Menu-item>
-          <Menu-item name="5">
-            <Icon type="ios-analytics" :size="iconSize"></Icon>
-            <span class="layout-text">选项 3</span>
-          </Menu-item>
-          <Menu-item name="/login">
-            <Icon type="ios-analytics" :size="iconSize"></Icon>
-            <span class="layout-text">退出</span>
-          </Menu-item>
+          <MenuGroup title="任务">
+            <Menu-item name="2">
+              <Icon type="ios-keypad" :size="iconSize"></Icon>
+              <span class="layout-text">我的任务</span>
+            </Menu-item>
+            <Menu-item name="3">
+              <Icon type="ios-analytics" :size="iconSize"></Icon>
+              <span class="layout-text">我创建的</span>
+            </Menu-item>
+            <Menu-item name="4">
+              <Icon type="ios-analytics" :size="iconSize"></Icon>
+              <span class="layout-text">未完成的</span>
+            </Menu-item>
+          </MenuGroup>
+
+          <MenuGroup title="我的">
+            <Menu-item name="4">
+              <Icon type="ios-analytics" :size="iconSize"></Icon>
+              <span class="layout-text">我的信息</span>
+            </Menu-item>
+            <Menu-item name="4">
+              <Icon type="ios-analytics" :size="iconSize"></Icon>
+              <span class="layout-text">我的权限</span>
+            </Menu-item>
+          </MenuGroup>
+          <MenuGroup title="系统">
+            <Menu-item name="4">
+              <Icon type="ios-analytics" :size="iconSize"></Icon>
+              <span class="layout-text">设置</span>
+            </Menu-item>
+            <Menu-item name="4">
+              <Icon type="ios-analytics" :size="iconSize"></Icon>
+              <span class="layout-text">退出</span>
+            </Menu-item>
+          </MenuGroup>
 
         </Menu>
       </i-col>
@@ -72,6 +97,9 @@
     computed: {
       iconSize () {
         return this.spanLeft === 3 ? 16 : 26;
+      },
+      setActive() {
+        return this.$route.path;
       }
     },
     methods: {
@@ -85,6 +113,8 @@
         }
       },
       goToPath(key){
+        //console.log(this.$route.path)
+        // console.log(this.$router.app.)
         this.$router.push(key)
       }
     }
@@ -92,6 +122,7 @@
 </script>
 <style scoped>
   .layout {
+    height: 500px;
     border: 1px solid #d7dde4;
     background: #f5f7f9;
     position: relative;
@@ -122,6 +153,10 @@
   }
 
   .layout-menu-left {
+    height: 500px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    /*border: solid 1px;*/
     /*background: #464c5b;*/
   }
 

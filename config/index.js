@@ -28,7 +28,7 @@ module.exports = {
   dev: {
     env: require('./dev.env'),
     port: process.env.PORT || 8700,
-    serviceUrl: '',
+    serviceUrl: 'http://localhost:8088/task',
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
