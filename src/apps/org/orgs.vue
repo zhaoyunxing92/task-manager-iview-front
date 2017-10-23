@@ -13,7 +13,6 @@
         </div>
       </Card>
       </Col>
-
     </Row>
 
   </div>

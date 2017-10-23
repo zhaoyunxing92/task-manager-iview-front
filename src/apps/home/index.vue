@@ -65,6 +65,9 @@
           <i-button type="text" @click="toggleClick">
             <Icon type="navicon" size="32"></Icon>
           </i-button>
+          <Select v-model="model1" style="width:200px">
+            <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          </Select>
         </div>
         <div class="layout-breadcrumb">
           <Breadcrumb>
@@ -89,6 +92,32 @@
   export default {
     data () {
       return {
+        cityList: [
+          {
+            value: 'beijing',
+            label: '北京市'
+          },
+          {
+            value: 'shanghai',
+            label: '上海市'
+          },
+          {
+            value: 'shenzhen',
+            label: '深圳市'
+          },
+          {
+            value: 'hangzhou',
+            label: '杭州市'
+          },
+          {
+            value: 'nanjing',
+            label: '南京市'
+          },
+          {
+            value: 'chongqing',
+            label: '重庆市'
+          }
+        ],
         spanLeft: 3,
         spanRight: 21,
         orgName: 'sdfds'
