@@ -1,22 +1,34 @@
 <template>
   <div class="login-layout">
     <div class="content">
-
-      <Form :rules="LoginFormRule" :model="LoginForm" ref="LoginForm">
-        <FormItem prop="account">
-          <Input type="text" v-model="LoginForm.account" placeholder="请输入邮箱/手机号/账号">
-          <Icon type="ios-person-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
-        <FormItem prop="password">
-          <Input type="password" v-model="LoginForm.password" placeholder="请输入密码">
-          <Icon type="ios-locked-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
-        <FormItem>
-          <Button type="primary" long shape="circle" :loading="loading" @click="login('LoginForm')">登录</Button>
-        </FormItem>
-      </Form>
+      <Card class="login-card" :bordered="false">
+        <p slot="title">
+          <Icon type="log-in"></Icon>
+          欢迎登录
+        </p>
+        <div class="form-con">
+          <Form ref="LoginForm" :model="LoginForm" :rules="LoginFormRule">
+            <FormItem prop="account">
+              <Input v-model="LoginForm.account" placeholder="请输入邮箱/手机号/账号">
+              <span slot="prepend">
+                   <Icon :size="16" type="person"></Icon>
+                </span>
+              </Input>
+            </FormItem>
+            <FormItem prop="password">
+              <Input type="password" v-model="LoginForm.password" placeholder="请输入密码">
+              <span slot="prepend">
+                  <Icon :size="14" type="locked"></Icon>
+                </span>
+              </Input>
+            </FormItem>
+            <FormItem>
+              <Button type="primary" shape="circle" long :loading="loading" @click="login('LoginForm')">登录</Button>
+            </FormItem>
+          </Form>
+          <!--<p class="login-tip">输入任意用户名和密码即可</p>-->
+        </div>
+      </Card>
 
     </div>
 
@@ -25,16 +37,14 @@
 </template>
 <style type="text/less" lang="less">
   .login-layout {
-    width: 100%;
-    height: 100%;
     .content {
-      max-width: 300px;
-      max-height: 560px;
-      min-height: 300px;
-      padding: 20px 30px;
-      margin: 60px auto;
-      width: 80%;
-      height: 80%;
+      .login-card {
+        margin: 80px auto;
+        width: 320px;
+        .ivu-card-head {   //登录标题居中显示
+          text-align: center;
+        }
+      }
     }
   }
 </style>

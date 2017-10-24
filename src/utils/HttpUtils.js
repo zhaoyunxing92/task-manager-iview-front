@@ -3,15 +3,15 @@
  * @date : 2017/9/11 16:20
  * @description : 统一处理请求
  */
-import axios from 'axios';
-import config from '../../config';
-import ObjectUtils from './ObjectUtils';
+import axios from "axios";
+import config from "../../config";
+import ObjectUtils from "./ObjectUtils";
 
 class HttpUtils {
-  constructor () {
+  constructor() {
     this.log = false;
-    /** 默认超时2秒 */
-    this.defaultTimeOut = 2000;
+    /** 默认超时30秒 */
+    this.defaultTimeOut = 3000;
     this.defaultMaxStatus = 600;
     this.defaultMinStatus = 200;
     /** 默认url */
@@ -30,7 +30,7 @@ class HttpUtils {
    * @param success
    * @param error
    */
-  baseRequest (url, type = 'GET', params, success, error) {
+  baseRequest(url, type = 'GET', params, success, error) {
     let _ = this;
     axios({
       baseURL: _.defaultServiceUrl,
@@ -54,15 +54,23 @@ class HttpUtils {
       }
     }).catch(function (err) {
       let errs = err.toString();
+      console.log(JSON.stringify(err));
       /**
        * timeout
        */
       if (errs.indexOf('timeout') >= -1) {
+        error && error("服务器连接超时,请稍后重试！");
+      } else if (errs.indexOf('Network Error') >= -1) {
+        error && error("网络异常！");
+      } else {
+        error && error("服务器异常请稍后重试！");
       }
-      error && error(err);
+
+      //error && error(err);
     });
   }
-  baseTestRequest (url, type = 'GET', success, error) {
+
+  baseTestRequest(url, type = 'GET', success, error) {
     let _ = this;
     axios({
       baseURL: _.defaultServiceUrl,
@@ -90,7 +98,7 @@ class HttpUtils {
        * timeout
        */
       if (errs.indexOf('timeout') >= -1) {
-    
+
       }
       error && error(err);
     });
@@ -103,8 +111,8 @@ class HttpUtils {
    * @param success
    * @param err
    */
-  doPost (url, params, success, err) {
-    this.baseRequest(url, 'POST', this.isParams(arguments.length,params), success, err);
+  doPost(url, params, success, err) {
+    this.baseRequest(url, 'POST', this.isParams(arguments.length, params), success, err);
   }
 
   /**
@@ -114,8 +122,8 @@ class HttpUtils {
    * @param success
    * @param err
    */
-  doGet (url, params, success, err) {
-    this.baseRequest(url, 'GET', this.isParams(arguments.length,params), success, err);
+  doGet(url, params, success, err) {
+    this.baseRequest(url, 'GET', this.isParams(arguments.length, params), success, err);
   }
 
   /**
@@ -125,8 +133,8 @@ class HttpUtils {
    * @param success
    * @param err
    */
-  doPut (url, params, success, err) {
-    this.baseRequest(url, 'PUT', this.isParams(arguments.length,params), success, err);
+  doPut(url, params, success, err) {
+    this.baseRequest(url, 'PUT', this.isParams(arguments.length, params), success, err);
   }
 
   /**
@@ -136,8 +144,8 @@ class HttpUtils {
    * @param success
    * @param err
    */
-  doDel (url, params, success, err) {
-    this.baseRequest(url, 'DELETE', this.isParams(arguments.length,params), success, err);
+  doDel(url, params, success, err) {
+    this.baseRequest(url, 'DELETE', this.isParams(arguments.length, params), success, err);
   }
 
   /**
@@ -146,7 +154,7 @@ class HttpUtils {
    * @param argumentsSize
    * @param params
    */
-  isParams (argumentsSize, params) {
+  isParams(argumentsSize, params) {
     if (argumentsSize == 3 && typeof params === 'function') {
       return {};
     } else {
