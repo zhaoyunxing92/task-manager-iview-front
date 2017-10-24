@@ -3,7 +3,9 @@
  * @date : 2017.10.23 10:31
  * @description :
  */
-const index = () => import(/* webpackChunkName: "group-foo" */ './index')
+
+const Main = () => import('../main')
+const Home = () => import(/* webpackChunkName: "group-foo" */ './home')
 
 const projectList = () => import(/* webpackChunkName: "project" */'../project/project')
 /**团队*/
@@ -13,10 +15,16 @@ const OrgList = () => import(/* webpackChunkName: "org" */'../org/orgs');
 export const name = {
   path: '/task',
   name: 'task-task',
-  component: index,
-  redirect: '/orgs',
+  component: Main,
+  redirect: '/task/home',
   meta: {title: ''},
   children: [
+    {
+      path: '/task/home',
+      name: 'task-home',
+      component: Home,
+      meta: {title: '首页'},
+    },
     {
       path: '/orgs/projects',
       name: 'task-projects',

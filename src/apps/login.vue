@@ -50,7 +50,7 @@
 </style>
 <script>
   import Api from '@Api'
-  import HttpUtils from '../../utils/HttpUtils'
+  import HttpUtils from '../utils/HttpUtils'
   export default {
     data () {
       return {

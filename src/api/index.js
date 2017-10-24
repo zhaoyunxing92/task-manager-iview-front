@@ -5,7 +5,7 @@
  */
 module.exports = {
   auth: {
-    'login': {url: 'auth/login', method: 'post',successurl:''}, //登录
+    'login': {url: 'auth/login', method: 'post',successurl:'task'}, //登录
     'active': 'auth/active' //激活
   },
 }
