@@ -38,12 +38,23 @@ new Vue({
     //this.currentPageName = this.$route.name;
    // this.$store.commit('initCachepage');
     // 菜单
-    this.$store.commit('updateMenulist');
+    this.$store.commit('setMenuList');
     //this.$store.commit('setOpenedList');
   },
   watch: {
     '$route' (to) {
+      //登录路由删除本地缓存
+      if(to.path==="/login"){
+       localStorage.removeItem("userInfo")
+      }
      // this.$store.commit('addOpendList', to);
+    },
+    '$store.state.currentOrgId':function(newVal,oldVal){
+     // window.location.reload();
+
+      //  this.$router.push({
+      //   path: 'details'
+      // });
     }
   }
 })

@@ -51,13 +51,14 @@
 <script>
   import Api from '@Api'
   import HttpUtils from '../utils/HttpUtils'
+  import ObjectUtils from '../utils/ObjectUtils'
   export default {
     data () {
       return {
         loading: false,
         LoginForm: {
-          account: '',
-          password: ''
+          account: '2385585770@qq.com',
+          password: '123456'
         },
         LoginFormRule: {
           account: [
@@ -79,6 +80,12 @@
           if (valid) {
             that.loading = true;
             HttpUtils.baseRequest(Api.auth.login.url, Api.auth.login.method, that.LoginForm, function (data) {
+              let userInfo = {
+                account: ObjectUtils.getValue(data.account, that.LoginForm.account),
+                email: ObjectUtils.getValue(data.email),
+                avatar: ObjectUtils.getValue(data.avatar,'https://avatars1.githubusercontent.com/u/18088210')
+              };
+              localStorage.setItem("userInfo", JSON.stringify(userInfo));
               that.$router.push(Api.auth.login.successurl);
             }, function (error) {
               //that.$refs[name].resetFields();

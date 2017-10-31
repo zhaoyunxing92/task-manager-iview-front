@@ -1,18 +1,52 @@
 <template>
   <div>
-    团队
+
+    <div class="layout-orgs-assistant">
+       <!--org菜单-->
+      <Menu mode="horizontal" :active-name="currentPath" @on-select="goToPath" class="layout-orgs-assistant">
+        <MenuItem :name="rootPath+orgMenu.path" :class="orgMenu.right ? 'menu-item-right':'' "  v-for="orgMenu in $store.state.orgMenuList">
+          <Icon :type="orgMenu.icon"></Icon>
+          {{orgMenu.title}}
+        </MenuItem>
+      </Menu>
+    </div>
+    <div class="layout-orgs-assistant-content">
+      <router-view/>
+    </div>
   </div>
 </template>
 <script>
   export default {
-    name: "task-org-index",
-    data () {//数据
-      return {}
+    data () {
+      return {
+        rootPath: '',
+        currentPath: ''
+      }
     },
-
+    created(){
+      let that = this;
+      that.currentPath = that.$route.path;
+      that.rootPath = that.currentPath.substr(0, that.currentPath.lastIndexOf('/') + 1);
+    },
+    methods: {
+      //跳转
+      goToPath(key){
+        this.$router.push(key);
+      }
+    },
   }
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style type="text/less" lang="less">
+  .layout-orgs-assistant {
+    height: 40px;
+    line-height: 40px;
+    padding-left: 10px;
+    background-color: white;
 
+  }
+  .layout-orgs-assistant-content {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+  }
 </style>

@@ -7,8 +7,11 @@ import axios from "axios";
 import config from "../../config";
 import ObjectUtils from "./ObjectUtils";
 
+// /*axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8';
+// axios.defaults.headers.common['token'] = 'sunny'*/
 class HttpUtils {
   constructor() {
+    // axios.defaults.withCredentials=true,
     this.log = false;
     /** 默认超时30秒 */
     this.defaultTimeOut = 3000;
@@ -16,7 +19,7 @@ class HttpUtils {
     this.defaultMinStatus = 200;
     /** 默认url */
     this.defaultServiceUrl = process.env.NODE_ENV === 'production' ? ObjectUtils.getValue(config.build.serviceUrl, '') : ObjectUtils.getValue(config.dev.serviceUrl, '');
-    this.withCredentials = false;
+    this.withCredentials = true;
   };
 
   /**
@@ -54,7 +57,7 @@ class HttpUtils {
       }
     }).catch(function (err) {
       let errs = err.toString();
-      console.log(JSON.stringify(err));
+
       /**
        * timeout
        */

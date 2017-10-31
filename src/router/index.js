@@ -9,6 +9,8 @@ const ProjectMember = () => import('../apps/project/member')
 /**团队模块*/
 const OrgHome = () => import('../apps/org/index');
 const OrgDetails = () => import('../apps/org/details');
+const OrgCreate = () => import('../apps/org/createOrg')
+const Orgs = () => import('../apps/org/orgs')
 
 const Message = () => import('../apps/msg/index')
 
@@ -91,6 +93,20 @@ export const otherRouter = {
       name: 'msg_index',
       meta: {title: '消息'},
       component: Message
+    },
+    {
+      path: "/create/org",
+      title: '创建组织',
+      name: 'org_create',
+      meta: {title: '创建组织'},
+      component: OrgCreate
+    },
+    {
+      path: "/org/info/:id",
+      title: '组织信息',
+      name: 'org_info',
+      meta: {title: '组织信息'},
+      component: OrgDetails
     }
   ]
 };
@@ -98,57 +114,81 @@ export const otherRouter = {
 export const appMenuRouter = [
   {
     path: '/org',
-    icon: 'person-stalker',
     name: 'org',
     title: '组织',
     component: Main,
     children: [
       {
-        path: 'index',
-        title: '组织统计',
+        path: '/',
+        title: '组织',
         icon: 'arrow-graph-up-right',
-        name: 'org_index',
-        meta: {title: '团队'},
-        component: OrgHome
+        name: 'orgs',
+        meta: {title: '组织列表'},
+        component: Orgs
       },
       {
-        path: 'details',
-        title: '组织成员',
-        icon: 'person',
-        name: 'org_details',
-        meta: {title: '详情'},
-        component: OrgDetails
+        path: ':uid',
+        orgMenu: true,
+        name: 'org-home',
+        meta: {title: '首页'},
+        redirect: '/org/:uid/outline',
+        component: OrgHome,
+        children: [
+          {
+            path: 'workbench',
+            title: '工作台',
+            icon: 'home',
+            meta: {title: '工作台'},
+            component: ProjectHome
+          },
+          {
+            path: 'outline',
+            title: '概要',
+            icon: 'navicon-round',
+            meta: {title: '概要'},
+            component: ProjectHome
+          },
+          {
+            path: 'issues',
+            title: '问题',
+            icon: 'document-text',
+            meta: {title: '问题列表'},
+            component: ProjectHome
+          },
+          {
+            path: 'statistics',
+            title: '统计',
+            icon: 'stats-bars',
+            meta: {title: '统计列表'},
+            component: ProjectHome
+          },
+          {
+            path: 'setting',
+            title: '设置',
+            icon: 'gear-b',
+            meta: {title: '设置'},
+            component: ProjectHome
+          },
+          {
+            path: 'add_project',
+            title: '添加项目',
+            icon: 'plus-circled',
+            right:true,
+            meta: {title: '项目'},
+            component: ProjectHome
+          },
+          {
+            path: 'add_user',
+            title: '邀请好友',
+            icon: 'person-add',
+            right:true,
+            meta: {title: '邀请好友'},
+            component: ProjectHome
+          }
+        ]
       }
-
-    ]
-  },
-  {
-    path: '/project',
-    icon: 'android-bookmark',
-    name: 'project',
-    title: '项目',
-    component: Main,
-    children: [
-      {
-        path: 'index',
-        title: '项目统计',
-        icon: 'arrow-graph-up-right',
-        name: 'project_index',
-        meta: {title: '项目'},
-        component: ProjectHome
-      },
-      {
-        path: 'member',
-        title: '项目成员',
-        icon: 'person',
-        name: 'project_member',
-        meta: {title: '成员'},
-        component: ProjectMember
-      }
-
     ]
   }
-
 ];
 
 // 所有上面定义的路由都要写在下面的routers里

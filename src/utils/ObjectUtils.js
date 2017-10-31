@@ -118,7 +118,7 @@ class ObjectUtils {
    * @returns {*}
    */
   getValue (obj, defaultValue = '') {
-    return this.isBlank(obj) ? defaultValue : obj
+    return this.isNull(obj) ? defaultValue : obj
   }
 }
 export default new ObjectUtils()

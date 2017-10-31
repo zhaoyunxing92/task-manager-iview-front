@@ -1,9 +1,10 @@
+<!--
 <style lang="less">
   @import "../assets/css/main.less";
 </style>
 <template>
   <div class="main" :class="{'main-hide-text': hideMenuText}">
-    <!--logo-->
+    &lt;!&ndash;logo&ndash;&gt;
     <div class="sidebar-menu-con"
          :style="{width: hideMenuText?'60px':'200px', overflow: hideMenuText ? 'visible' : 'auto', background: $store.state.menuTheme === 'dark'?'#495060':'white'}">
       <div class="logo-con">
@@ -16,32 +17,32 @@
     <div class="main-header-con" :style="{paddingLeft: hideMenuText?'60px':'200px'}">
       <div class="main-header">
         <div class="navicon-con">
-          <!--菜单开关-->
+          &lt;!&ndash;菜单开关&ndash;&gt;
           <Button :style="{transform: 'rotateZ(' + (this.hideMenuText ? '-90' : '0') + 'deg)'}" type="text"
                   @click="toggleClick">
             <Icon type="navicon" size="32"></Icon>
           </Button>
         </div>
 
-        <!--<div class="header-middle-con">-->
-        <!--&lt;!&ndash;面包屑&ndash;&gt;-->
-        <!--<div class="main-breadcrumb">-->
-        <!--<breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav>-->
-        <!--</div>-->
-        <!--</div>-->
+        &lt;!&ndash;<div class="header-middle-con">&ndash;&gt;
+        &lt;!&ndash;&lt;!&ndash;面包屑&ndash;&gt;&ndash;&gt;
+        &lt;!&ndash;<div class="main-breadcrumb">&ndash;&gt;
+        &lt;!&ndash;<breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav>&ndash;&gt;
+        &lt;!&ndash;</div>&ndash;&gt;
+        &lt;!&ndash;</div>&ndash;&gt;
         <div class="header-avator-con">
-          <!--<div @click="handleFullScreen" v-if="showFullScreenBtn" class="full-screen-btn-con">-->
-          <!--<Tooltip :content="isFullScreen ? '退出全屏' : '全屏'" placement="bottom">-->
-          <!--<Icon :type="isFullScreen ? 'arrow-shrink' : 'arrow-expand'" :size="23"></Icon>-->
-          <!--</Tooltip>-->
-          <!--</div>-->
-          <!--<div @click="lockScreen" class="lock-screen-btn-con">-->
-          <!--<Tooltip content="锁屏" placement="bottom">-->
-          <!--<Icon type="locked" :size="20"></Icon>-->
-          <!--</Tooltip>-->
-          <!--</div>-->
+          &lt;!&ndash;<div @click="handleFullScreen" v-if="showFullScreenBtn" class="full-screen-btn-con">&ndash;&gt;
+          &lt;!&ndash;<Tooltip :content="isFullScreen ? '退出全屏' : '全屏'" placement="bottom">&ndash;&gt;
+          &lt;!&ndash;<Icon :type="isFullScreen ? 'arrow-shrink' : 'arrow-expand'" :size="23"></Icon>&ndash;&gt;
+          &lt;!&ndash;</Tooltip>&ndash;&gt;
+          &lt;!&ndash;</div>&ndash;&gt;
+          &lt;!&ndash;<div @click="lockScreen" class="lock-screen-btn-con">&ndash;&gt;
+          &lt;!&ndash;<Tooltip content="锁屏" placement="bottom">&ndash;&gt;
+          &lt;!&ndash;<Icon type="locked" :size="20"></Icon>&ndash;&gt;
+          &lt;!&ndash;</Tooltip>&ndash;&gt;
+          &lt;!&ndash;</div>&ndash;&gt;
 
-          <!--信息-->
+          &lt;!&ndash;信息&ndash;&gt;
           <div @click="goToPath('/message')" class="message-con">
             <Tooltip :content="messageCount > 0 ? '有' + messageCount + '条未读消息' : '无未读消息'" placement="bottom">
               <Badge :count="messageCount" dot>
@@ -49,14 +50,14 @@
               </Badge>
             </Tooltip>
           </div>
-          <!--主题-->
-          <!--<div class="switch-theme-con">-->
-          <!--<Row class="switch-theme" type="flex" justify="center" align="middle">-->
-          <!--<theme-dropdown-menu></theme-dropdown-menu>-->
-          <!--</Row>-->
-          <!--</div>-->
+          &lt;!&ndash;主题&ndash;&gt;
+          &lt;!&ndash;<div class="switch-theme-con">&ndash;&gt;
+          &lt;!&ndash;<Row class="switch-theme" type="flex" justify="center" align="middle">&ndash;&gt;
+          &lt;!&ndash;<theme-dropdown-menu></theme-dropdown-menu>&ndash;&gt;
+          &lt;!&ndash;</Row>&ndash;&gt;
+          &lt;!&ndash;</div>&ndash;&gt;
 
-          <!--账号-->
+          &lt;!&ndash;账号&ndash;&gt;
           <div class="user-dropdown-menu-con">
             <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
               <Dropdown trigger="click" @on-click="goToPath">
@@ -75,7 +76,6 @@
         </div>
       </div>
       <div class="tags-con">
-
         <tags-page-opened :pageTagsList="pageTagsList"></tags-page-opened>
       </div>
     </div>
@@ -90,28 +90,30 @@
 </template>
 <script>
   import sidebarMenu from '../components/sidebarMenu.vue';
-  import tagsPageOpened from '../components/tagsPageOpened.vue';
+  //import tagsPageOpened from '../components/tagsPageOpened.vue';
   import breadcrumbNav from '../components/breadcrumbNav.vue';
   //import themeDropdownMenu from '../components/themeDropdownMenu.vue';
   import sidebarMenuShrink from '../components/sidebarMenuShrink.vue';
-
+  import Api from '@Api'
+  import HttpUtils from '../utils/HttpUtils'
   export default {
     components: {
 
       sidebarMenu,
-      tagsPageOpened,
+      //tagsPageOpened,
       breadcrumbNav,
       // themeDropdownMenu,
       sidebarMenuShrink
     },
     data () {
       return {
-        avatorPath: 'https://avatars1.githubusercontent.com/u/18088210',
+        userInfo: {},
         spanLeft: 4,
         spanRight: 20,
+        orgs: [],
+        currentOrgName: '',
         currentPageName: '',
         hideMenuText: false,  //是否展开
-        userName: '',
 //        showFullScreenBtn: window.navigator.userAgent.indexOf('MSIE') < 0,
         isFullScreen: false,
         messageCount: 5,
@@ -125,130 +127,47 @@
       menuIconColor () {
         return this.$store.state.menuTheme === 'dark' ? 'white' : '#495060';
       },
-
-//      tagsList () {
-//        return this.$store.state.tagsList;  // 所有页面的页面对象
-//      },
-//      pageTagsList () {
-//        return this.$store.state.pageOpenedList;  // 打开的页面的页面对象
-//      },
-
-//      currentPath () {
-//        return this.$store.state.currentPath;  // 当前面包屑数组
-//      },
-
-//      avatorPath () {
-//        return localStorage.avatorImgPath;
-//      },
-//      cachePage () {
-//        return this.$store.state.cachePage;
-//      }
     },
     methods: {
+      //切换组织
+      changeOrg(obj){
+        let that = this;
+        that.currentOrgName = obj.name;
+        if (obj.path) { //跳转到创建组织界面
+          this.$router.push(obj.path);
+        } else {
+          that.$store.state.currentOrgId = obj.uniqueId
+        }
+
+      },
       goToPath(key){
         this.$router.push(key);
       },
       toggleClick () {
         this.hideMenuText = !this.hideMenuText;
       },
-    }
-//      init () {
-//        this.$store.commit('setCurrentPageName', this.$route.name);
-//        let pathArr = util.setCurrentPath(this, this.$route.name);
-//        if (pathArr.length >= 2) {
-//          this.$store.commit('addOpenSubmenu', pathArr[1].name);
-//        }
-//        this.userName = Cookies.get('user');
-//        let messageCount = 3;
-//        this.messageCount = messageCount.toString();
-//      },
+      /**获取全部组织*/
+      getOrgs(){
+        let that = this;
+        HttpUtils.baseRequest(Api.org.orgs.url, Api.org.orgs.method, {}, function (data) {
+          data.push({'name': '创建组织', 'divided': true, 'path': '/create/org'});
+          that.orgs = data;
+          that.currentOrgName = data[0].name;
+          // data[0].selected = true;
+        }, function (error) {
 
-//      handleClickUserDropdown (name) {
-//        if (name === 'ownSpace') {
-//          util.openNewPage(this, 'ownspace_index');
-//          this.$router.push({
-//            name: 'ownspace_index'
-//          });
-//        } else if (name === 'loginout') {
-//          // 退出登录
-//          Cookies.remove('user');
-//          Cookies.remove('password');
-//          Cookies.remove('hasGreet');
-//          Cookies.remove('access');
-//          this.$Notice.close('greeting');
-//          this.$store.commit('clearOpenedSubmenu');
-//          // 回复默认样式
-//          let themeLink = document.querySelector('link[name="theme"]');
-//          themeLink.setAttribute('href', '');
-//          // 清空打开的页面等数据，但是保存主题数据
-//          let theme = '';
-//          if (localStorage.theme) {
-//            theme = localStorage.theme;
-//          }
-//          localStorage.clear();
-//          if (theme) {
-//            localStorage.theme = theme;
-//          }
-//          this.$router.push({
-//            name: 'login'
-//          });
-//        }
-//      },
-//      handleFullScreen () {
-//        let main = document.getElementById('main');
-//        if (this.isFullScreen) {
-//          if (document.exitFullscreen) {
-//            document.exitFullscreen();
-//          } else if (document.mozCancelFullScreen) {
-//            document.mozCancelFullScreen();
-//          } else if (document.webkitCancelFullScreen) {
-//            document.webkitCancelFullScreen();
-//          } else if (document.msExitFullscreen) {
-//            document.msExitFullscreen();
-//          }
-//        } else {
-//          if (main.requestFullscreen) {
-//            main.requestFullscreen();
-//          } else if (main.mozRequestFullScreen) {
-//            main.mozRequestFullScreen();
-//          } else if (main.webkitRequestFullScreen) {
-//            main.webkitRequestFullScreen();
-//          } else if (main.msRequestFullscreen) {
-//            main.msRequestFullscreen();
-//          }
-//        }
-//      },
-//      showMessage () {
-//        util.openNewPage(this, 'message_index');
-//        this.$router.push({
-//          name: 'message_index'
-//        });
-//      },
-//      lockScreen () {
-//        let lockScreenBack = document.getElementById('lock_screen_back');
-//        lockScreenBack.style.transition = 'all 3s';
-//        lockScreenBack.style.zIndex = 10000;
-//        lockScreenBack.style.boxShadow = '0 0 0 ' + this.lockScreenSize + 'px #667aa6 inset';
-//        this.showUnlock = true;
-//        this.$store.commit('lock');
-//        Cookies.set('last_page_name', this.$route.name); // 本地存储锁屏之前打开的页面以便解锁后打开
-//        setTimeout(() => {
-//          lockScreenBack.style.transition = 'all 0s';
-//          this.$router.push({
-//            name: 'locking'
-//          });
-//        }, 800);
-//      }
-//    },
-//    watch: {
-//      '$route' (to) {
-//        this.$store.commit('setCurrentPageName', to.name);
-//        let pathArr = util.setCurrentPath(this, to.name);
-//        if (pathArr.length > 2) {
-//          this.$store.commit('addOpenSubmenu', pathArr[1].name);
-//        }
-//      }
-//    },
+        })
+      }
+    },
+    created () {
+      let that = this;
+      // 查找当前用户之前登录时设置的主题
+      let user = localStorage.getItem("userInfo");
+      that.userInfo.email = JSON.parse(user).email;
+      that.userInfo.account = JSON.parse(user).account;
+      that.userInfo.avatar = JSON.parse(user).avatar;
+      that.getOrgs();
+    }
 //    mounted () {
 //      this.init();
 //      // 全屏相关
@@ -352,3 +271,90 @@
 
   };
 </script>
+-->
+<style type="text/less" lang="less">
+  .inline-block{
+    display: inline-block;
+  }
+  .layout {
+    /*border: 1px solid #d7dde4;*/
+    .layout-head {
+      height: 60px;
+      background: #1e384c;
+      margin: 0 auto;
+      .layout-logo {
+        width: 200px;
+        float: left;
+        margin-left: 20px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .layout-org {
+        width: 15%;
+        height: 60px;
+        .ivu-dropdown{
+          width: 300px;
+          position: absolute;
+          margin: 18px 20px;
+          z-index: 9999;
+        }
+      }
+      .layout-search {
+        width: 20%;
+        margin: 15px auto;
+
+      }
+      .layout-user{
+        float: right;
+      }
+    }
+  }
+</style>
+<template>
+  <div class="layout">
+    <div class="layout-head">
+
+      <!--logo-->
+      <div class="layout-logo inline-block">
+        <img src="../assets/images/logo.jpg">
+      </div>
+        <!--org-->
+      <div class="layout-org inline-block">
+        <Dropdown trigger="click">
+          <a href="javascript:void(0)">
+            &nbsp;团队&nbsp;
+            <Icon type="arrow-down-b"></Icon>
+          </a>
+          <DropdownMenu slot="list" v-for="org in this.$store.state.orgs">
+            <DropdownItem>{{org.name}}</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+      </div>
+        <!--search-->
+      <div class="layout-search inline-block">
+        <Input icon="ios-search" placeholder="search....">
+        <Button slot="append" icon="ios-search"></Button>
+        </Input>
+      </div>
+       <!--info-->
+      <div class="layout-user inline-block">个人信息</div>
+    </div>
+
+    <div style="width: 99%; margin: 5px auto">
+      <router-view/>
+    </div>
+  </div>
+</template>
+<script>
+  import Api from '@Api'
+  import HttpUtils from '../utils/HttpUtils'
+  export default {
+    data () {
+      return {
+      }
+    }
+  }
+</script>
+
