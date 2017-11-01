@@ -4,9 +4,9 @@
     <div class="layout-orgs-assistant">
        <!--org菜单-->
       <Menu mode="horizontal" :active-name="currentPath" @on-select="goToPath" class="layout-orgs-assistant">
-        <MenuItem :name="rootPath+orgMenu.path" :class="orgMenu.right ? 'menu-item-right':'' "  v-for="orgMenu in $store.state.orgMenuList">
+        <MenuItem :name="orgMenu.name" :class="orgMenu.right ? 'menu-item-right':'' "  v-for="orgMenu in $store.state.orgMenuList">
           <Icon :type="orgMenu.icon"></Icon>
-          {{orgMenu.title}}
+          {{orgMenu.menuName}}
         </MenuItem>
       </Menu>
     </div>
@@ -19,19 +19,18 @@
   export default {
     data () {
       return {
-        rootPath: '',
-        currentPath: ''
+        currentPath: this.$route.name
       }
     },
     created(){
-      let that = this;
-      that.currentPath = that.$route.path;
-      that.rootPath = that.currentPath.substr(0, that.currentPath.lastIndexOf('/') + 1);
+//      let that = this;
+//      that.currentPath = that.$route.path;
+//      that.rootPath = that.currentPath.substr(0, that.currentPath.lastIndexOf('/') + 1);
     },
     methods: {
       //跳转
       goToPath(key){
-        this.$router.push(key);
+        this.$router.push({name:key});
       }
     },
   }
@@ -46,7 +45,6 @@
   }
   .layout-orgs-assistant-content {
     margin: 20px auto;
-    padding: 20px;
     background-color: white;
   }
 </style>

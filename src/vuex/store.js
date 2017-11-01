@@ -18,6 +18,7 @@ const store = new Vuex.Store({
     //tagsList: [...otherRouter.children],
     menuTheme: '', // 菜单主题
     orgMenuList: [], //组织菜单
+    workbenchMenu: [], //工作台菜单
     pageOpenedList: [],   //默认打开页面],  // 面包屑数组
     currentPageName: '',//当前展开的菜单名称
     openedSubmenuArr: [],  // 要展开的菜单数组
@@ -26,118 +27,48 @@ const store = new Vuex.Store({
   mutations: {
     //添加
     addOrgs(state, obj){
-      console.log(222)
+      // console.log(222)
       state.orgs.push(obj);
-      console.log(obj)
+      // console.log(obj)
     },
-    // //主题设置
-    // changeMenuTheme (state, theme) {
-    //   state.menuTheme = theme;
-    // },
-    // //设置当前打开页面
-    // setCurrentPageName (state, name) {
-    //   state.currentPageName = name;
-    // },
-    // //默认首页
-    // setOpenedList (state) {
-    //   state.pageOpenedList = [otherRouter.children[0]];
-    // },
-    // addOpendList(state, to){
-    //   let newOpen = state.pageOpenedList.push(to);
-    //   state.pageOpenedList = ObjecUtils.ArrayUnique(newOpen);
-    //   // let oldPageList = state.pageOpenedList,
-    //   //   oldPageLength = oldPageList.length;
-    //   //
-    //   // let newPageList = oldPageList.push(to),
-    //   //   newPageLength = newPageList.length;
-    //   //
-    //   // for (let i = 0; i < oldPageLength; i++) {
-    //   //   for (let j = 0; j < newPageLength; j++) {
-    //   //     if (oldPageLength[i].path === newPageLength[j].path&&oldPageLength[i].path!='/home') {
-    //   //       newPageLength.splice(j, 1, newPageLength[j])
-    //   //     }
-    //   //   }
-    //   // }
-    //   // state.pageOpenedList= newPageList;
-    //
-    //
-    //   // state.pageOpenedList.forEach((item, index) => {
-    //   //   console.log('--', item.path)
-    //   //   console.log('--', to.path)
-    //   //   console.log(item.path !== to.path)
-    //   //   if (item.path !== to.path) {
-    //   //     state.pageOpenedList.push(to)
-    //   //   }
-    //   // if (item.path !== to.path) {
-    //   //   state.pageOpenedList.push(to)
-    //   // } else {
-    //   //   state.pageOpenedList.splice(index, 1)
-    //   // }
-    //
-    //   //state.pageOpenedList.push(to)
-    //   //})
-    //
-    //   console.log('-----', state.pageOpenedList)
-    //
-    // },
-    //
-    // clearAllTags (state) {
-    //   // state.pageOpenedList.splice(1);
-    //   // router.push({
-    //   //   name: 'home_index'
-    //   // });
-    //   // state.cachePage = [];
-    //   // localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
-    // },
-    // clearOtherTags (state, vm) {
-    //   // let currentName = vm.$route.name;
-    //   // let currentIndex = 0;
-    //   // state.pageOpenedList.forEach((item, index) => {
-    //   //   if (item.name === currentName) {
-    //   //     currentIndex = index;
-    //   //   }
-    //   // });
-    //   // if (currentIndex === 0) {
-    //   //   state.pageOpenedList.splice(1);
-    //   // } else {
-    //   //   state.pageOpenedList.splice(currentIndex + 1);
-    //   //   state.pageOpenedList.splice(1, currentIndex - 1);
-    //   // }
-    //   // let newCachepage = state.cachePage.filter(item => {
-    //   //   return item === currentName;
-    //   // });
-    //   // state.cachePage = newCachepage;
-    //   // localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
-    // },
     setMenuList (state){
       // let accessCode = parseInt(Cookies.get('access'));
       let orgMenuList = [];
+      let workbenchMenu = [];
       appMenuRouter.forEach((item, index) => {
 
         let itemChildren = item.children;
         itemChildren.forEach((children, index) => {
-          if (children.orgMenu) {
+          if (children.orgMenu && children.children.length > 0) {
             let orgMenus = children.children;
             orgMenus.forEach((orgMenu, index) => {
-              if (!orgMenu.hide && !orgMenus.hide) {
+              if (!orgMenu.hide) {
                 orgMenuList.push({
-                  'title': orgMenu.title,
-                  'path': orgMenu.path,
-                  'icon': orgMenu.icon,
-                  'right': orgMenu.right ? true : false
+                  'menuName': orgMenu.meta.menuName,
+                  'name': orgMenu.name,
+                  'icon': orgMenu.meta.icon,
+                  'right': orgMenu.meta.right ? true : false
                 })
+                if (orgMenu.workbenchMenu && orgMenu.children.length > 0) {
+                  let workbenchMenus = orgMenu.children;
+                  workbenchMenus.forEach((workMenu, index) => {
+                    if (!workMenu.hide) {
+                      workbenchMenu.push({
+                        'name': workMenu.name,
+                        'icon': workMenu.meta.icon,
+                        'menuName': workMenu.meta.menuName
+                      })
+                    }
+                  })
+                }
               }
             })
           }
         })
-
-        // if (item.existChildren) {
-        //   menuList.push(item);
-        // }
-
       });
       state.orgMenuList = orgMenuList;
-
+      state.workbenchMenu = workbenchMenu;
+      // state.orgs.push({'name':'test'})
     }
   },
   getters: {},

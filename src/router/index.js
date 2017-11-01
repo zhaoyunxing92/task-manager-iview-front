@@ -14,7 +14,13 @@ const Orgs = () => import('../apps/org/orgs')
 
 const Message = () => import('../apps/msg/index')
 
-// 不作为Main组件的子页面展示的页面单独写，如下
+
+/**工作台*/
+const workbenchPrefix = '../apps/workbench/';
+const WorkbenchIndex = () => import('../apps/workbench/index');
+const AssignedToMe = () => import('../apps/workbench/assigned_to_me');
+
+//
 export const loginRouter = {
   path: '/login',
   name: 'login',
@@ -24,56 +30,6 @@ export const loginRouter = {
   component: Login
 };
 //
-// export const page404 = {
-//   path: '/*',
-//   name: 'error_404',
-//   meta: {
-//     title: '404-页面不存在'
-//   },
-//   component: resolve => {
-//     require(['./views/error_page/404.vue'], resolve);
-//   }
-// };
-
-// export const page401 = {
-//   path: '/401',
-//   meta: {
-//     title: '401-权限不足'
-//   },
-//   name: 'error_401',
-//   component: resolve => {
-//     require(['./views/error_page/401.vue'], resolve);
-//   }
-// };
-
-// export const page500 = {
-//   path: '/500',
-//   meta: {
-//     title: '500-服务端错误'
-//   },
-//   name: 'error_500',
-//   component: resolve => {
-//     require(['./views/error_page/500.vue'], resolve);
-//   }
-// };
-
-// export const preview = {
-//   path: '/preview',
-//   name: 'preview',
-//   component: resolve => {
-//     require(['./views/form/article-publish/preview.vue'], resolve);
-//   }
-// };
-//
-// export const locking = {
-//   path: '/locking',
-//   name: 'locking',
-//   component: resolve => {
-//     require(['./views/main_components/locking-page.vue'], resolve);
-//   }
-// };
-//<Icon type="person-stalker"></Icon>
-// 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
 export const otherRouter = {
   path: '/task',
   name: 'otherRouter',
@@ -136,53 +92,72 @@ export const appMenuRouter = [
         children: [
           {
             path: 'workbench',
-            title: '工作台',
-            icon: 'home',
-            meta: {title: '工作台'},
-            component: ProjectHome
+            name: 'main-workbench',
+            workbenchMenu: true,
+            meta: {title: '工作台', icon: 'home', menuName: '工作台'},
+            redirect: '/org/:uid/workbench/assigned',
+            component: WorkbenchIndex,
+            children: [
+              {
+                path: 'assigned',
+                name: 'workbench-assigned',
+                meta: {title: '指给我的', icon: 'at', menuName: '指给我的'},
+                component: AssignedToMe,
+              },
+              {
+                path: 'create',
+                name: 'workbench-me-create',
+                meta: {title: '我提出的', icon: 'document-text', menuName: '我提出的'},
+                component: AssignedToMe,
+              },
+              {
+                path: 'follow',
+                name: 'workbench-me-follow',
+                meta: {title: '我关注的', icon: 'star', menuName: '我关注的'},
+                component: AssignedToMe,
+              },
+              {
+                path: 'finish',
+                name: 'workbench-me-finish',
+                meta: {title: '我完成的', icon: 'document-text', menuName: '我完成的'},
+                component: AssignedToMe,
+              }
+            ]
           },
           {
             path: 'outline',
-            title: '概要',
-            icon: 'navicon-round',
-            meta: {title: '概要'},
+            name: 'main-outline',
+            meta: {title: '概览', icon: 'navicon-round', menuName: '概览'},
             component: ProjectHome
           },
           {
             path: 'issues',
-            title: '问题',
-            icon: 'document-text',
-            meta: {title: '问题列表'},
+            name: 'main-issues',
+            meta: {title: '问题列表', icon: 'document-text', menuName: '问题'},
             component: ProjectHome
           },
           {
             path: 'statistics',
-            title: '统计',
-            icon: 'stats-bars',
-            meta: {title: '统计列表'},
+            name: 'main-statistics',
+            meta: {title: '统计列表', icon: 'stats-bars', menuName: '统计'},
             component: ProjectHome
           },
           {
             path: 'setting',
-            title: '设置',
-            icon: 'gear-b',
-            meta: {title: '设置'},
+            name: 'main-setting',
+            meta: {title: '设置', icon: 'gear-b', menuName: '设置'},
             component: ProjectHome
           },
           {
             path: 'add_project',
-            title: '添加项目',
-            icon: 'plus-circled',
-            right:true,
-            meta: {title: '项目'},
+            name: 'main-add-project',
+            meta: {title: '添加项目', icon: 'plus-circled', menuName: '添加项目', right: true},
             component: ProjectHome
           },
           {
             path: 'add_user',
-            title: '邀请好友',
-            icon: 'person-add',
-            right:true,
-            meta: {title: '邀请好友'},
+            name: 'main-add-user',
+            meta: {title: '邀请好友', icon: 'person-add', menuName: '邀请好友', right: true},
             component: ProjectHome
           }
         ]
@@ -195,11 +170,7 @@ export const appMenuRouter = [
 export const routers = [
   loginRouter,
   otherRouter,
-  // preview,
-  // locking,
   ...appMenuRouter,
-  // page500,
-  // page401,
-  // page404
+
 ];
 
