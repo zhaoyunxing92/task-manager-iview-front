@@ -9,9 +9,14 @@ const ProjectMember = () => import('../apps/project/member')
 /**团队模块*/
 const OrgHome = () => import('../apps/org/index');
 const OrgDetails = () => import('../apps/org/details');
-const OrgCreate = () => import('../apps/org/createOrg')
+const OrgCreate = () => import('../apps/org/createOrg');
 const Orgs = () => import('../apps/org/orgs');
 const OrgSetting = () => import('../apps/org/setting');
+/**团队设置*/
+const OrgSettingAdvance=()=>import('../apps/org/setting/advance');//高级设置
+const OrgSettingOrgInfo=()=>import('../apps/org/setting/orgInfo');
+
+
 
 const Message = () => import('../apps/msg/index')
 
@@ -148,14 +153,22 @@ export const appMenuRouter = [
             path: 'setting',
             name: 'main-setting',
             settingMenu: true,
-            meta: {title: '设置', icon: 'gear-b', menuName: '设置'},
+            meta: {title: '设置', icon: 'settings', menuName: '设置'},
+            redirect: '/org/:uid/setting/info',
             component: OrgSetting,
             children: [
               {
                 path: 'info',
                 //  alias: ['abc'],
                 name: 'main-setting-info',
-                meta: {title: '团队信息', icon: 'information', menuName: '团队信息'},
+                meta: {title: '团队信息', icon: 'information-circled', menuName: '团队信息'},
+                component: OrgSettingOrgInfo,
+              },
+              {
+                path: 'projects',
+                //  alias: ['abc'],
+                name: 'main-setting-projects',
+                meta: {title: '团队项目', icon: 'pie-graph', menuName: '团队项目'},
                 component: AssignedToMe,
               },
               {
@@ -169,14 +182,15 @@ export const appMenuRouter = [
                 path: 'role',
                 //  alias: ['abc'],
                 name: 'main-setting-role',
-                meta: {title: '团队角色', icon: 'person-stalker', menuName: '团队角色'},
+                meta: {title: '团队角色', icon: 'eye', menuName: '团队角色'},
                 component: AssignedToMe,
               },
+
               {
                 path: 'task_type',
                 //  alias: ['abc'],
                 name: 'main-setting-task-type',     //<Icon type="bookmark"></Icon>
-                meta: {title: '任务类型', icon: 'bookmark', menuName: '任务类型'},
+                meta: {title: '任务类型', icon: 'bookmark', menuName: '任务类型',iconSize:'18'},
                 component: AssignedToMe,
               },
               {
@@ -191,7 +205,7 @@ export const appMenuRouter = [
                 //  alias: ['abc'],
                 name: 'main-setting-advance',
                 meta: {title: '高级设置', icon: 'android-warning', menuName: '高级设置',iconColor:'#ed3f14',iconSize:'18'},
-                component: AssignedToMe,
+                component: OrgSettingAdvance,
               }
             ]
           },
