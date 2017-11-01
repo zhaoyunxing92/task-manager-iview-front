@@ -1,7 +1,7 @@
 <template>
-       <div>
-         <Table :columns="columns1" :data="data2"></Table>
-       </div>
+  <div>
+    <Table :columns="columns1" :data="data2"></Table>
+  </div>
 </template>
 <script>
   export default {
@@ -28,6 +28,56 @@
             age: 18,
             address: '北京市朝阳区芍药居'
           },
+          {
+            name: '王小明',
+            age: 18,
+            address: '北京市朝阳区芍药居'
+          },
+          {
+            name: '王小明',
+            age: 18,
+            address: '北京市朝阳区芍药居'
+          },
+          {
+            name: '王小明',
+            age: 18,
+            address: '北京市朝阳区芍药居'
+          },
+          {
+            name: '王小明',
+            age: 18,
+            address: '北京市朝阳区芍药居'
+          }, {
+            name: '王小明',
+            age: 18,
+            address: '北京市朝阳区芍药居'
+          },
+          {
+            name: '王小明',
+            age: 18,
+            address: '北京市朝阳区芍药居'
+          },
+          {
+            name: '王小明',
+            age: 18,
+            address: '北京市朝阳区芍药居'
+          },
+          {
+            name: '王小明',
+            age: 18,
+            address: '北京市朝阳区芍药居'
+          },
+          {
+            name: '王小明',
+            age: 18,
+            address: '北京市朝阳区芍药居'
+          },
+          {
+            name: '王小明',
+            age: 18,
+            address: '北京市朝阳区芍药居'
+          },
+
           {
             name: '张小刚',
             age: 25,

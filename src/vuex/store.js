@@ -19,6 +19,7 @@ const store = new Vuex.Store({
     menuTheme: '', // 菜单主题
     orgMenuList: [], //组织菜单
     workbenchMenu: [], //工作台菜单
+    settingMenu:[],//设置菜单
     pageOpenedList: [],   //默认打开页面],  // 面包屑数组
     currentPageName: '',//当前展开的菜单名称
     openedSubmenuArr: [],  // 要展开的菜单数组
@@ -27,14 +28,16 @@ const store = new Vuex.Store({
   mutations: {
     //添加
     addOrgs(state, obj){
-      // console.log(222)
       state.orgs.push(obj);
-      // console.log(obj)
+    },
+    setCucurrentOrgId(state, uid){
+      state.currentOrgId = uid;
     },
     setMenuList (state){
       // let accessCode = parseInt(Cookies.get('access'));
       let orgMenuList = [];
       let workbenchMenu = [];
+      let settingMenu=[];
       appMenuRouter.forEach((item, index) => {
 
         let itemChildren = item.children;
@@ -48,15 +51,28 @@ const store = new Vuex.Store({
                   'name': orgMenu.name,
                   'icon': orgMenu.meta.icon,
                   'right': orgMenu.meta.right ? true : false
-                })
+                });
+                 // let submenus;
                 if (orgMenu.workbenchMenu && orgMenu.children.length > 0) {
-                  let workbenchMenus = orgMenu.children;
-                  workbenchMenus.forEach((workMenu, index) => {
+                 // submenus= orgMenu.children;
+                  orgMenu.children.forEach((workMenu, index) => {
                     if (!workMenu.hide) {
                       workbenchMenu.push({
                         'name': workMenu.name,
                         'icon': workMenu.meta.icon,
                         'menuName': workMenu.meta.menuName
+                      })
+                    }
+                  })
+                }else if(orgMenu.settingMenu && orgMenu.children.length > 0){
+                  orgMenu.children.forEach((submenu, index) => {
+                    if (!submenu.hide) {
+                      settingMenu.push({
+                        'name': submenu.name,
+                        'icon': submenu.meta.icon,
+                        'iconColor':submenu.meta.iconColor,
+                        'iconSize':submenu.meta.iconSize,
+                        'menuName': submenu.meta.menuName
                       })
                     }
                   })
@@ -68,10 +84,13 @@ const store = new Vuex.Store({
       });
       state.orgMenuList = orgMenuList;
       state.workbenchMenu = workbenchMenu;
+      state.settingMenu= settingMenu;
       // state.orgs.push({'name':'test'})
     }
   },
-  getters: {},
+  getters: {
+
+  },
   modules: {}
 })
 export default store

@@ -70,6 +70,8 @@
         } else {
           //跳转控制台界面
           that.$router.push({path: 'org/'+obj.uniqueId, params: {uid: obj.uniqueId}});
+          that.$store.state.currentOrgId=obj.uniqueId;
+          //setCucurrentOrgId
         }
 
       }

@@ -2,14 +2,18 @@
   <div>
 
     <div class="layout-orgs-assistant">
-       <!--org菜单-->
-      <Menu mode="horizontal" :active-name="currentPath" @on-select="goToPath" class="layout-orgs-assistant">
-        <MenuItem :name="orgMenu.name" :class="orgMenu.right ? 'menu-item-right':'' "  v-for="orgMenu in $store.state.orgMenuList">
-          <Icon :type="orgMenu.icon"></Icon>
-          {{orgMenu.menuName}}
-        </MenuItem>
-      </Menu>
+      <!--<Affix>-->
+        <!--org菜单-->
+        <Menu mode="horizontal" :active-name="currentPath" @on-select="goToPath" class="layout-orgs-assistant">
+          <MenuItem :name="orgMenu.name" :class="orgMenu.right ? 'menu-item-right':'' "
+                    v-for="orgMenu in $store.state.orgMenuList">
+            <Icon :type="orgMenu.icon"></Icon>
+            {{orgMenu.menuName}}
+          </MenuItem>
+        </Menu>
+      <!--</Affix>-->
     </div>
+
     <div class="layout-orgs-assistant-content">
       <router-view/>
     </div>
@@ -30,7 +34,7 @@
     methods: {
       //跳转
       goToPath(key){
-        this.$router.push({name:key});
+        this.$router.push({name: key});
       }
     },
   }
@@ -43,6 +47,7 @@
     background-color: white;
 
   }
+
   .layout-orgs-assistant-content {
     margin: 20px auto;
     background-color: white;

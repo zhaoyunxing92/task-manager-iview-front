@@ -10,7 +10,8 @@ const ProjectMember = () => import('../apps/project/member')
 const OrgHome = () => import('../apps/org/index');
 const OrgDetails = () => import('../apps/org/details');
 const OrgCreate = () => import('../apps/org/createOrg')
-const Orgs = () => import('../apps/org/orgs')
+const Orgs = () => import('../apps/org/orgs');
+const OrgSetting = () => import('../apps/org/setting');
 
 const Message = () => import('../apps/msg/index')
 
@@ -100,6 +101,7 @@ export const appMenuRouter = [
             children: [
               {
                 path: 'assigned',
+                //  alias: ['abc'],
                 name: 'workbench-assigned',
                 meta: {title: '指给我的', icon: 'at', menuName: '指给我的'},
                 component: AssignedToMe,
@@ -107,7 +109,7 @@ export const appMenuRouter = [
               {
                 path: 'create',
                 name: 'workbench-me-create',
-                meta: {title: '我提出的', icon: 'document-text', menuName: '我提出的'},
+                meta: {title: '我提出的', icon: 'plus', menuName: '我提出的'},
                 component: AssignedToMe,
               },
               {
@@ -145,8 +147,53 @@ export const appMenuRouter = [
           {
             path: 'setting',
             name: 'main-setting',
+            settingMenu: true,
             meta: {title: '设置', icon: 'gear-b', menuName: '设置'},
-            component: ProjectHome
+            component: OrgSetting,
+            children: [
+              {
+                path: 'info',
+                //  alias: ['abc'],
+                name: 'main-setting-info',
+                meta: {title: '团队信息', icon: 'information', menuName: '团队信息'},
+                component: AssignedToMe,
+              },
+              {
+                path: 'user',
+                //  alias: ['abc'],
+                name: 'main-setting-user',
+                meta: {title: '团队成员', icon: 'person-stalker', menuName: '团队成员'},
+                component: AssignedToMe,
+              },
+              {
+                path: 'role',
+                //  alias: ['abc'],
+                name: 'main-setting-role',
+                meta: {title: '团队角色', icon: 'person-stalker', menuName: '团队角色'},
+                component: AssignedToMe,
+              },
+              {
+                path: 'task_type',
+                //  alias: ['abc'],
+                name: 'main-setting-task-type',     //<Icon type="bookmark"></Icon>
+                meta: {title: '任务类型', icon: 'bookmark', menuName: '任务类型'},
+                component: AssignedToMe,
+              },
+              {
+                path: 'task_status',
+                //  alias: ['abc'],
+                name: 'main-setting-task-status',
+                meta: {title: '任务状态', icon: 'ribbon-a', menuName: '任务状态'},
+                component: AssignedToMe,
+              } ,
+              {
+                path: 'advance',
+                //  alias: ['abc'],
+                name: 'main-setting-advance',
+                meta: {title: '高级设置', icon: 'android-warning', menuName: '高级设置',iconColor:'#ed3f14',iconSize:'18'},
+                component: AssignedToMe,
+              }
+            ]
           },
           {
             path: 'add_project',
