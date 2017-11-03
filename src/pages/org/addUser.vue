@@ -1,45 +1,11 @@
 <template>
-  <div>
-    <Col span="4">
-    <Card>
-      <p slot="title">
-        <Icon type="gear-b"></Icon> &nbsp;设置面板
-      </p>
-      <a href="javascript:void(0)" slot="extra">
-        <Icon slot="extra" type="ios-skipbackward" size="20"></Icon>
-      </a>
-
-      <Menu :active-name="$route.name" width="auto" @on-select="goToPath">
-        <MenuItem :name="menu.name" v-for="(menu,index) in $store.state.settingMenu" :key="index">
-          <Icon :type="menu.icon" :color="menu.iconColor" :size="menu.iconSize"></Icon>
-          {{menu.menuName}}
-        </MenuItem>
-      </Menu>
-    </Card>
-
-    </Col>
-    <Col span="20">
-    <Card>
-
-      <p slot="title">
-        <Icon :type="$route.meta.icon" :color="$route.meta.iconColor" :size="$route.meta.iconSize"></Icon>
-        &nbsp;{{$route.meta.menuName}}&nbsp;
-      </p>
-
-
-      <a v-show="addTypeName!==''" href="javascript:void(0)" slot="extra" @click.prevent="changeLimit">
-        <Icon type="plus-circled"></Icon>
-        {{addTypeName}}
-      </a>
-
-      <router-view/>
-    </Card>
-    </Col>
-  </div>
+     <div>
+       添加成员
+     </div>
 </template>
 <script>
   export default {
-    name: "task-project-list",
+    name: "app-org-add-user",
     data () {//数据
       return {}
     },
@@ -82,4 +48,3 @@
 <style scoped>
 
 </style>
-
