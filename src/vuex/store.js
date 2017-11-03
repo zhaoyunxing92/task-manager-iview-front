@@ -34,6 +34,7 @@ const store = new Vuex.Store({
       state.currentOrgId = uid;
     },
     setMenuList (state){
+     // return;
       // let accessCode = parseInt(Cookies.get('access'));
       let orgMenuList = [];
       let workbenchMenu = [];

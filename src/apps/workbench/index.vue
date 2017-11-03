@@ -10,7 +10,7 @@
       </a>
 
       <Menu :active-name="$route.name" width="auto" @on-select="goToPath">
-        <MenuItem :name="menu.name" v-for="menu in $store.state.workbenchMenu">
+        <MenuItem :name="menu.name" v-for="(menu,index) in $store.state.workbenchMenu" :key="index">
           <Icon :type="menu.icon"></Icon>
           {{menu.menuName}}
         </MenuItem>

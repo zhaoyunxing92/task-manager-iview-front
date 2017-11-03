@@ -327,7 +327,7 @@
             &nbsp;团队&nbsp;
             <Icon type="arrow-down-b"></Icon>
           </a>
-          <DropdownMenu slot="list" v-for="org in this.$store.state.orgs">
+          <DropdownMenu slot="list" v-for="org in this.$store.state.orgs" :key="org.uniqueId">
             <DropdownItem>{{org.name}}</DropdownItem>
           </DropdownMenu>
         </Dropdown>

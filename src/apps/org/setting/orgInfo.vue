@@ -1,10 +1,13 @@
 <template>
   <Card>
-    <p slot="title">
-      <Icon type="plus-circled" color="#619fe7"></Icon>
-      创建组织
-    </p>
+    <!--<p slot="title">-->
+      <!--<Icon type="plus-circled" color="#619fe7"></Icon>-->
+      <!--创建组织-->
+    <!--</p>-->
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+      <FormItem label="组织uid" prop="uid">
+        <Input v-model="formValidate.uid" disabled/>
+      </FormItem>
       <FormItem label="组织名称" prop="name">
         <Input v-model="formValidate.name" placeholder="请输入组织名称"/>
       </FormItem>
@@ -26,7 +29,7 @@
       </FormItem>
 
       <FormItem style="text-align: center">
-        <Button type="primary" shape="circle" :loading="loading" @click="handleSubmit('formValidate')">提交</Button>
+        <Button type="primary" shape="circle" :loading="loading" @click="handleSubmit('formValidate')">保存</Button>
         <!--<Button type="ghost" shape="circle" @click="goBack" style="margin-left: 10px">返回</Button>-->
       </FormItem>
     </Form>
@@ -84,11 +87,6 @@
             that.$Message.error('表单验证失败!');
           }
         })
-      },
-      //返回
-      goBack () {
-        let that = this;
-        that.$router.go(-1);
       },
       getOrgInfo(){
         let that = this;

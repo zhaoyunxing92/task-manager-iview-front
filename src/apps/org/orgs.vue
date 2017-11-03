@@ -1,7 +1,7 @@
 <template>
   <div class="layout-orgs">
     <Row>
-      <Col span="6" v-for="org in orgs" offset="1" style="margin-top: 20px">
+      <Col span="6" v-for="org in orgs" offset="1" style="margin-top: 20px" :key="org.uniqueId">
       <Card class="layout-orgs-card">
         <p slot="title" class="layout-orgs-title">{{org.name}}</p>
         <a href="#" slot="extra" v-if="org.isAdmin">

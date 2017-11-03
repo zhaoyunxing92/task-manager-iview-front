@@ -1,81 +1,88 @@
 <template>
-   <div>
-     <Col span="4">
-     <Card>
-       <p slot="title">
-         <Icon type="gear-b"></Icon> &nbsp;设置面板
-       </p>
-       <a href="#" slot="extra">
-         <Icon slot="extra" type="ios-skipbackward" size="20"></Icon>
-       </a>
+  <div>
+    <Col span="4">
+    <Card>
+      <p slot="title">
+        <Icon type="gear-b"></Icon> &nbsp;设置面板
+      </p>
+      <a href="javascript:void(0)" slot="extra">
+        <Icon slot="extra" type="ios-skipbackward" size="20"></Icon>
+      </a>
 
-       <Menu :active-name="$route.name" width="auto" @on-select="goToPath">
-         <MenuItem :name="menu.name" v-for="menu in $store.state.settingMenu">
-           <Icon :type="menu.icon" :color="menu.iconColor" :size="menu.iconSize"></Icon>
-           {{menu.menuName}}
-         </MenuItem>
-       </Menu>
-     </Card>
+      <Menu :active-name="$route.name" width="auto" @on-select="goToPath">
+        <MenuItem :name="menu.name" v-for="(menu,index) in $store.state.settingMenu" :key="index">
+          <Icon :type="menu.icon" :color="menu.iconColor" :size="menu.iconSize"></Icon>
+          {{menu.menuName}}
+        </MenuItem>
+      </Menu>
+    </Card>
 
-     </Col>
-     <Col span="20">
-     <Card>
-       <p slot="title">
-         <Icon :type="$route.meta.icon" :color="$route.meta.iconColor" :size="$route.meta.iconSize"></Icon>
-         &nbsp;{{$route.meta.menuName}}&nbsp;
-       </p>
-       <!--<a href="#" slot="extra" @click.prevent="changeLimit">-->
-         <!--<Icon type="refresh"></Icon>-->
-         <!--刷新-->
-       <!--</a>-->
-       <!--<a href="#" slot="extra" @click.prevent="changeLimit">-->
-         <!--<Icon type="refresh"></Icon>-->
-         <!--刷新-->
-       <!--</a>-->
-       <!--<a href="#" slot="extra" @click.prevent="changeLimit">-->
-         <!--<Icon type="refresh"></Icon>-->
-         <!--刷新-->
-       <!--</a>-->
-       <router-view/>
-     </Card>
-     </Col>
-   </div>
+    </Col>
+    <Col span="20">
+    <Card>
+      <p slot="title">
+        <Icon :type="$route.meta.icon" :color="$route.meta.iconColor" :size="$route.meta.iconSize"></Icon>
+        &nbsp;{{$route.meta.menuName}}&nbsp;
+      </p>
+
+
+      <a v-show="addTypeName!==''" href="javascript:void(0)" slot="extra" @click.prevent="changeLimit">
+        <Icon type="plus-circled"></Icon>
+        {{addTypeName}}
+      </a>
+
+      <router-view/>
+    </Card>
+    </Col>
+  </div>
 </template>
 <script>
+  import ObjectUtils from '../../utils/ObjectUtils'
   export default {
     name: "task-org-setting",
     data () {//数据
-      return {}
+      return {
+        addTypeName: '',//右脚添加名称
+      }
     },
     methods: {
+      //跳转
       goToPath(key){
         this.$router.push({name: key});
+      },
+      //设置右脚添加名称
+      getAddTypeName(key){
+        let that = this;
+        switch (key) {
+          case 'add_project':
+            that.addTypeName = '创建项目';
+            return;
+          case 'add_user':
+            that.addTypeName = '添加成员';
+            return;
+          case 'add_role':
+            that.addTypeName = '添加角色';
+            return;
+          case 'add_task_type':
+            that.addTypeName = '添加类型';
+            return;
+          case 'add_task_status' :
+            that.addTypeName = '添加状态';
+            return;
+          default:
+            that.addTypeName = '';
+        }
       }
     },
     watch: {
-      //一个对象，键是需要观察的表达式，值是对应回调函数。值也可以是方法名，或者包含选项的对象。Vue 实例将会在实例化时调用$watch()，遍历 watch 对象的每一个属性。
+      '$route.meta.type': function (val) {
+        this.getAddTypeName(val);
+      }
     },
-    beforeCreate(){
-      //在实例初始化之后，数据观测(data observer) 和 event/watcher 事件配置之前被调用
-    },
+
     created(){
-      //实例已经创建完成之后被调用。在这一步，实例已完成以下的配置：数据观测(data observer)，属性和方法的运算，watch/event 事件回调。然而，挂载阶段还没开始，$el 属性目前不可见
+      this.getAddTypeName(this.$route.meta.type);
     },
-    mounted(){
-      //el 被新创建的 vm.$el 替换，并挂载到实例上去之后调用该钩子。如果 root 实例挂载了一个文档内元素，当 mounted 被调用时 vm.$el 也在文档内。
-    },
-    beforeUpdate () {
-      //  数据更新时调用，发生在虚拟 DOM 重新渲染和打补丁之前。你可以在这个钩子中进一步地更改状态，这不会触发附加的重渲染过程。该钩子在服务器端渲染期间不被调用。
-    },
-    updated(){
-      // 当这个钩子被调用时，组件 DOM 已经更新，所以你现在可以执行依赖于 DOM 的操作。然而在大多数情况下，你应该避免在此期间更改状态。如果要相应状态改变，通常最好使用计算属性或 watcher 取而代之。
-    },
-    beforeDestroy(){
-      //实例销毁之前调用。在这一步，实例仍然完全可用。
-    },
-    destroyed(){
-      //Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁
-    }
   }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

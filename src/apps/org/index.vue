@@ -6,7 +6,7 @@
         <!--org菜单-->
         <Menu mode="horizontal" :active-name="currentPath" @on-select="goToPath" class="layout-orgs-assistant">
           <MenuItem :name="orgMenu.name" :class="orgMenu.right ? 'menu-item-right':'' "
-                    v-for="orgMenu in $store.state.orgMenuList">
+                    v-for="(orgMenu,index) in $store.state.orgMenuList" :key="index">
             <Icon :type="orgMenu.icon"></Icon>
             {{orgMenu.menuName}}
           </MenuItem>
