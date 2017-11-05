@@ -16,19 +16,6 @@
         </MenuItem>
       </Menu>
     </Card>
-    <!--<Card>-->
-      <!--<p slot="title">-->
-        <!--<Icon type="android-desktop"></Icon> &nbsp;我的工作台-->
-      <!--</p>-->
-
-      <!--<Icon slot="extra" type="ios-skipbackward" size="20"></Icon>-->
-      <!--<Menu :active-name="$route.name" width="auto" @on-select="goToPath">-->
-        <!--<MenuItem :name="menu.name" v-for="menu in $store.state.workbenchMenu">-->
-          <!--<Icon :type="menu.icon"></Icon>-->
-          <!--{{menu.menuName}}-->
-        <!--</MenuItem>-->
-      <!--</Menu>-->
-    <!--</Card>-->
 
     </Col>
     <Col span="20">

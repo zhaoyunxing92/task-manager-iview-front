@@ -6,6 +6,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import {appMain} from "../router/index";
+
 Vue.use(Vuex);
 const store = new Vuex.Store({
   state: { //state 定义了应用状态的数据结构，同样可以在这里设置默认的初始状态。
@@ -33,70 +34,53 @@ const store = new Vuex.Store({
       // return;
       // let accessCode = parseInt(Cookies.get('access'));
       let headMenus = [];
-      // let workbenchMenu = [];
-      // let settingMenu = [];
+      let workbenchMenus = [];
+      let settingMenus = [];
       appMain.forEach(item => {
-
         if (item.children.length > 0) {
           item.children.forEach(headMenu => {
+            //头部导航
             if (!headMenu.hide) {
               headMenus.push({
                 name: headMenu.name,
                 icon: headMenu.meta.icon,
                 menuName: headMenu.meta.menuName,
                 right: headMenu.meta.right,
-                iconColor:headMenu.meta.iconColor
+                iconColor: headMenu.meta.iconColor
+              });
+
+            }
+            //左侧菜单 ---工作台
+            if (headMenu.workbenchMenu && headMenu.children.length > 0) {
+              headMenu.children.forEach(leftMenu => {
+                workbenchMenus.push({
+                  name: leftMenu.name,
+                  icon: leftMenu.meta.icon,
+                  menuName: leftMenu.meta.menuName,
+                  iconColor: leftMenu.meta.iconColor
+                });
               })
             }
+            //左侧菜单 ---setting
+            if (headMenu.settingMenu && headMenu.children.length > 0) {
+              headMenu.children.forEach(leftMenu => {
+                settingMenus.push({
+                  name: leftMenu.name,
+                  icon: leftMenu.meta.icon,
+                  menuName: leftMenu.meta.menuName,
+                  iconColor: leftMenu.meta.iconColor
+                });
+              })
+            }
+
           });
         }
 
 
-        // let itemChildren = item.children;
-        // itemChildren.forEach((children, index) => {
-        //   if (children.orgMenu && children.children.length > 0) {
-        //     let orgMenus = children.children;
-        //     orgMenus.forEach((orgMenu, index) => {
-        //       if (!orgMenu.hide) {
-        //         orgMenuList.push({
-        //           'menuName': orgMenu.meta.menuName,
-        //           'name': orgMenu.name,
-        //           'icon': orgMenu.meta.icon,
-        //           'right': orgMenu.meta.right ? true : false
-        //         });
-        //          // let submenus;
-        //         if (orgMenu.workbenchMenu && orgMenu.children.length > 0) {
-        //          // submenus= orgMenu.children;
-        //           orgMenu.children.forEach((workMenu, index) => {
-        //             if (!workMenu.hide) {
-        //               workbenchMenu.push({
-        //                 'name': workMenu.name,
-        //                 'icon': workMenu.meta.icon,
-        //                 'menuName': workMenu.meta.menuName
-        //               })
-        //             }
-        //           })
-        //         }else if(orgMenu.settingMenu && orgMenu.children.length > 0){
-        //           orgMenu.children.forEach((submenu, index) => {
-        //             if (!submenu.hide) {
-        //               settingMenu.push({
-        //                 'name': submenu.name,
-        //                 'icon': submenu.meta.icon,
-        //                 'iconColor':submenu.meta.iconColor,
-        //                 'iconSize':submenu.meta.iconSize,
-        //                 'menuName': submenu.meta.menuName
-        //               })
-        //             }
-        //           })
-        //         }
-        //       }
-        //     })
-        //   }
-        // })
       });
       state.orgMenuList = headMenus;
-      // state.workbenchMenu = workbenchMenu;
-      //state.settingMenu = settingMenu;
+      state.workbenchMenu = workbenchMenus;
+      state.settingMenu = settingMenus;
       // state.orgs.push({'name':'test'})
     }
   },

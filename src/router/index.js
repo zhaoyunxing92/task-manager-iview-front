@@ -259,16 +259,20 @@ const Project = () => import('../pages/project/index'); //项目列表
 
 /**设置*/
 const Setting = () => import('../pages/setting/index');
+const SettingOrgInfo = () => import('../pages/setting/orgInfo');//组织信息
+const SettingOrgAdvance=()=>import('../pages/setting/orgAdvance'); //组织高级设置
+const SettingOrgUsers=()=>import('../pages/setting/orgUsers'); //组织成员
+const SettingOrgRole=()=>import('../pages/setting/orgRole');//组织角色
+const SettingOrgProjects=()=>import('../pages/setting/orgProjects');//组织项目
+const SettingOrgThirdparty=()=>import('../pages/setting/orgThirdparty'); //第三方绑定数据
 
 /**组织*/
 const AddOrg = () => import('../pages/org/addOrg');
 const AddOrgUser = () => import('../pages/org/addUser');
-const OrgList=()=>import('../pages/org/orgList');
+const OrgList = () => import('../pages/org/orgList');
 
 /**other*/
 const Login = () => import(/* webpackChunkName: "login" */ '../apps/login');
-
-
 
 
 export const appMain = [
@@ -337,8 +341,49 @@ export const appMain = [
       {
         path: '/setting',
         name: 'app-setting',
+        settingMenu: true,
         meta: {title: '设置', icon: 'document-text', menuName: '设置'},
-        component: Setting
+        component: Setting,
+        redirect: '/setting/orgInfo',
+        children: [
+          {
+            path: 'orgInfo',  //组织信息
+            name: 'app-setting-org-info',
+            component: SettingOrgInfo,
+            meta: {title: '团队信息', icon: 'document-text', menuName: '团队信息'},
+          },
+          {
+            path: 'projects',
+            name: 'app-setting-org-project',
+            component: SettingOrgProjects,
+            meta: {title: '团队项目', icon: 'document-text', menuName: '团队项目'},
+          },
+          {
+            path: 'users',  //组织信息
+            name: 'app-setting-org-user',
+            component: SettingOrgUsers,     //SettingOrgRole
+            meta: {title: '团队成员', icon: 'document-text', menuName: '团队成员'},
+          },
+
+          {
+            path: 'role',  //组织信息
+            name: 'app-setting-org-role',
+            component: SettingOrgRole,     //thirdparty
+            meta: {title: '团队角色', icon: 'document-text', menuName: '团队角色'},
+          },
+          {
+            path: 'thirdparty',  //组织信息
+            name: 'app-setting-org-thirdparty',
+            component: SettingOrgThirdparty,     //thirdparty
+            meta: {title: '第三方数据', icon: 'document-text', menuName: '第三方'},
+          },
+          {
+            path: 'advance',  //高级设置
+            name: 'app-setting-org-advance',
+            component: SettingOrgAdvance,
+            meta: {title: '高级设置', icon: 'document-text', menuName: '高级设置'},
+          }
+        ]
       },
       {
         path: '/add-user',
@@ -361,7 +406,7 @@ export const appMain = [
       },
       {
         path: '/add-org',
-        name: 'app-create-org',
+        name: 'app-create-org-main',
         redirect: '/create/org',
         meta: {title: '创建团队', icon: 'document-text', menuName: '创建团队', right: true},
       },

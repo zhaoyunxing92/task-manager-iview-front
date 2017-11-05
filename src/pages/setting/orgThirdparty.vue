@@ -1,55 +1,11 @@
 <template>
   <div>
-    <Col span="4">
-    <Card>
-      <p slot="title">
-        <Icon type="android-desktop"></Icon> &nbsp;我的工作台
-      </p>
-      <a href="#" slot="extra" @click.prevent="changeLimit">
-        <Icon slot="extra" type="ios-skipbackward" size="20"></Icon>
-      </a>
-
-      <Menu :active-name="$route.name" width="auto" @on-select="goToPath">
-        <MenuItem :name="menu.name" v-for="(menu,index) in $store.state.workbenchMenu" :key="index">
-          <Icon :type="menu.icon"></Icon>
-          {{menu.menuName}}
-        </MenuItem>
-      </Menu>
-    </Card>
-    <!--<Card>-->
-    <!--<p slot="title">-->
-    <!--<Icon type="android-desktop"></Icon> &nbsp;我的工作台-->
-    <!--</p>-->
-
-    <!--<Icon slot="extra" type="ios-skipbackward" size="20"></Icon>-->
-    <!--<Menu :active-name="$route.name" width="auto" @on-select="goToPath">-->
-    <!--<MenuItem :name="menu.name" v-for="menu in $store.state.workbenchMenu">-->
-    <!--<Icon :type="menu.icon"></Icon>-->
-    <!--{{menu.menuName}}-->
-    <!--</MenuItem>-->
-    <!--</Menu>-->
-    <!--</Card>-->
-
-    </Col>
-    <Col span="20">
-    <Card>
-      <p slot="title">
-        <Icon :type="$route.meta.icon"></Icon>
-        &nbsp;{{$route.meta.menuName}}&nbsp;
-      </p>
-      <a href="#" slot="extra" @click.prevent="changeLimit">
-        <Icon type="refresh"></Icon>
-        刷新
-      </a>
-      <router-view/>
-    </Card>
-
-    </Col>
+    第三方绑定数据
   </div>
 </template>
 <script>
   export default {
-    name: "app-me-index",
+    name: "app-setting-org-thirdparty",
     data () {//数据
       return {}
     },
