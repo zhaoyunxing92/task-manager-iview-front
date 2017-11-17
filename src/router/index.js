@@ -271,8 +271,13 @@ const AddOrg = () => import('../pages/org/addOrg');
 const AddOrgUser = () => import('../pages/org/addUser');
 const OrgList = () => import('../pages/org/orgList');
 
+/**me*/
+const AppMe =()=>import('../pages/me/index');
+
+
+
 /**other*/
-const Login = () => import(/* webpackChunkName: "login" */ '../apps/login');
+const Login = () => import(/* webpackChunkName: "login" */ '../pages/login');
 
 
 export const appMain = [
@@ -386,6 +391,12 @@ export const appMain = [
         ]
       },
       {
+        path: '/orgs',
+        name: 'app-toggle-org',
+        meta: {title: '团队列表', icon: 'document-text', menuName: '切换团队'},
+        component: OrgList
+      },
+      {
         path: '/add-user',
         name: 'app-add-org',
         meta: {title: '邀请好友', icon: 'document-text', menuName: '邀请好友'},
@@ -399,86 +410,17 @@ export const appMain = [
         component: AddOrg
       },
       {
-        path: '/user/info',
+        path: '/userInfo',
         name: 'app-user-info',
         meta: {title: '我的信息', icon: 'document-text', menuName: '我的信息', right: true},
-        component: AddOrgUser
+        component: AppMe
       },
       {
         path: '/add-org',
         name: 'app-create-org-main',
         redirect: '/create/org',
         meta: {title: '创建团队', icon: 'document-text', menuName: '创建团队', right: true},
-      },
-      {
-        path: '/orgs',
-        name: 'app-toggle-org',
-        meta: {title: '团队列表', icon: 'document-text', menuName: '切换团队', right: true},
-        component: OrgList
-      },
-
-
-      // {
-      //   path: 'setting',
-      //   name: 'main-setting',
-      //   settingMenu: true,
-      //   meta: {title: '设置', icon: 'settings', menuName: '设置'},
-      //   redirect: '/org/:uid/setting/info',
-      //   component: OrgSetting,
-      //   children: [
-      //     {
-      //       path: 'info',
-      //       //  alias: ['abc'],
-      //       name: 'main-setting-info',
-      //       meta: {title: '团队信息', icon: 'information-circled', menuName: '团队信息'},
-      //       component: OrgSettingOrgInfo,
-      //     },
-      //     {
-      //       path: 'projects',
-      //       //  alias: ['abc'],
-      //       name: 'main-setting-projects',
-      //       meta: {title: '团队项目', icon: 'pie-graph', menuName: '团队项目', type: 'add_project'},
-      //       component: OrgSettingProjects,
-      //     },
-      //     {
-      //       path: 'user',
-      //       //  alias: ['abc'],
-      //       name: 'main-setting-user',
-      //       meta: {title: '团队成员', icon: 'person-stalker', menuName: '团队成员', type: 'add_user'},
-      //       component: OrgTaskType,
-      //     },
-      //     {
-      //       path: 'role',
-      //       //  alias: ['abc'],
-      //       name: 'main-setting-role',
-      //       meta: {title: '团队角色', icon: 'eye', menuName: '团队角色', type: 'add_role'},
-      //       component: OrgTaskType,
-      //     },
-      //
-      //     {
-      //       path: 'task_type',
-      //       //  alias: ['abc'],
-      //       name: 'main-setting-task-type',
-      //       meta: {title: '任务类型', icon: 'bookmark', menuName: '任务类型', iconSize: '18', type: 'add_task_type'},
-      //       component: OrgTaskType,
-      //     },
-      //     {
-      //       path: 'task_status',
-      //       //  alias: ['abc'],
-      //       name: 'main-setting-task-status',
-      //       meta: {title: '任务状态', icon: 'ribbon-a', menuName: '任务状态', type: 'add_task_status'},
-      //       component: OrgTaskType,
-      //     },
-      //     {
-      //       path: 'advance',
-      //       //  alias: ['abc'],
-      //       name: 'main-setting-advance',
-      //       meta: {title: '高级设置', icon: 'android-warning', menuName: '高级设置', iconColor: '#ed3f14', iconSize: '18'},
-      //       component: OrgSettingAdvance,
-      //     }
-      //   ]
-      // }
-
+      }
     ]
   }
 ];
@@ -509,6 +451,5 @@ export const otherRouter = [
 export const routers = [
   ...otherRouter,
   ...appMain,
-
 ];
 
